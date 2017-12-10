@@ -73,8 +73,8 @@ contract CharitySpace {
   // Start CharitySPACE ico!
   function start() public onlyBy(owner) {
     require(started == false);
-		startDate = now;            
-		endDate = now + 30 days + 2 hours; // ico duration + backup time
+    startDate = now;            
+    endDate = now + 30 days + 2 hours; // ico duration + backup time
     preIcoEndDate = now + preIcoMaxLasts;
     live = true;
     started = true;
