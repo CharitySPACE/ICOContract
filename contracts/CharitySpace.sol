@@ -5,20 +5,20 @@ The Crowdsale contract.
 import "./CharitySpaceToken.sol";
 
 pragma solidity ^0.4.17;
- 
+
 contract CharitySpace {
   
   struct Tier {
-		uint256 tokens;
-		uint256 tokensSold;
-		uint256 price;
-	}
+    uint256 tokens;
+    uint256 tokensSold;
+    uint256 price;
+  }
   
   // Events
   event ReceivedETH(address addr, uint value);
-	event ReceivedBTC(address addr, uint value, string txid);
-	event ReceivedBCH(address addr, uint value, string txid);
-	event ReceivedLTC(address addr, uint value, string txid);
+  event ReceivedBTC(address addr, uint value, string txid);
+  event ReceivedBCH(address addr, uint value, string txid);
+  event ReceivedLTC(address addr, uint value, string txid);
   
   // Public variables
   CharitySpaceToken public charitySpaceToken;
@@ -40,20 +40,15 @@ contract CharitySpace {
   bytes32 private bchHash = keccak256('BCH');
   
   // Interceptors
-	modifier onlyBy(address a) {
-		require(msg.sender == a); 
+  modifier onlyBy(address a) {
+    require(msg.sender == a); 
     _;
-	}
+  }
   
-  modifier isLive() {
-		require(live);
-    _;
-	}
-
   modifier respectTimeFrame() {
-		require((now > startDate) && (now < endDate));
+    require((now > startDate) && (now < endDate));
     _;
-	}
+  }
   
   function CharitySpace(address _donationsAddress) public {
     owner = msg.sender;
@@ -76,14 +71,14 @@ contract CharitySpace {
   }
   
   // Start CharitySPACE ico!
-	function start() public onlyBy(owner) {
+  function start() public onlyBy(owner) {
     require(started == false);
 		startDate = now;            
 		endDate = now + 30 days + 2 hours; // ico duration + backup time
     preIcoEndDate = now + preIcoMaxLasts;
     live = true;
     started = true;
-	}
+  }
   
   function end() public onlyBy(owner) {
     require(started == true);
@@ -92,7 +87,7 @@ contract CharitySpace {
     charitySpaceToken.destroyUnsoldTokens();
     live = false;
     started = true;
-	}
+  }
   
   function receiveDonation() public payable respectTimeFrame {
     uint256 _value = msg.value;
